@@ -1,22 +1,41 @@
 pipeline {
   agent any
-
+  
+  tools {
+    maven "maven-3.9"
+  }
+  
   stages {
-    stage("build") {
+    stage("build jar") {
       steps {
-        echo "building the application ..."
+        script {
+          echo "building the application ..."
+          sh 'mvn package'
+        }
+        
       }
     }
 
-    stage("test") {
+    stage("build docker image") {
           steps {
-            echo "testing the application..."
+            script {
+              echo "building the docker image ..."
+              withCredentials([usernamePassword(credentialsId: 'dockerhub-pat', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+              sh 'docker build -t $DOCKERHUB_USERNAME/demo-app:jma-1.2 .'
+              sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME -p --password-stdin'
+              sh 'docker push $DOCKERHUB_USERNAME/demo-app:jma-1.2'
+              }
+            }
+            
           }
     }
     
     stage("deploy") {
       steps {
-        echo "deploying the application...."
+        script {
+          echo "deploying the application.... "
+        }
+        
       }
     }
   }
