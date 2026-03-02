@@ -12,7 +12,7 @@ pipeline {
     stage("init") {
       steps {
         script {
-          gv = load "script.groovy"
+          //gv = load "script.groovy"
           echo "initializing the pipeline..."
         }
       }
@@ -20,7 +20,7 @@ pipeline {
     stage("build jar") {
       steps {
         script {
-          gv.buildJar()
+          //gv.buildJar()
         }
         
       }
@@ -29,7 +29,7 @@ pipeline {
     stage("build docker image") {
           steps {
             script {
-              gv.buildImage()
+              //gv.buildImage()
               }
             }
             
