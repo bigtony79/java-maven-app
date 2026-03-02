@@ -20,7 +20,7 @@ pipeline {
     stage("build jar") {
       steps {
         script {
-          //gv.buildJar()
+          gv.buildJar()
         }
         
       }
