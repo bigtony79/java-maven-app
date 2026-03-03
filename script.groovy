@@ -1,3 +1,9 @@
+def runTests() {
+    echo "Testing the application ..."
+    echo "Executing the piplein for branch $BRANCH_NAME"
+    sh 'mvn test'
+}
+
 def buildJar() {
     echo "building the application ..."
     sh 'mvn package'

@@ -19,7 +19,20 @@ pipeline {
       }
     }
 
+    stage("test") {
+      steps {
+        script {
+          gv.runTests()
+        }
+      }
+    }
+
     stage("build jar") {
+      when {
+        expression {
+          BRANCH_NAME == "main" //This variable is only available in multibranch pipeline.
+         }
+      }
       steps {
         script {
           gv.buildJar()
@@ -28,6 +41,12 @@ pipeline {
     }
 
     stage("build docker image") {
+      when {
+        expression {
+          BRANCH_NAME == "main" //This variable is only available in multibranch pipeline.
+         }
+      }
+      
       steps {
         script {
           gv.buildImage()
@@ -36,6 +55,12 @@ pipeline {
     }
 
     stage("deploy") {
+      when {
+        expression {
+          BRANCH_NAME == "main" //This variable is only available in multibranch pipeline.
+         }
+      }
+      
       steps {
         script {
           gv.deployApp()
