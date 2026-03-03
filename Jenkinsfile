@@ -32,11 +32,6 @@ pipeline {
     }
 
     stage("build jar") {
-      when {
-        expression {
-          BRANCH_NAME == "main" //This variable is only available in multibranch pipeline.
-         }
-      }
       steps {
         script {
           buildJar()
@@ -45,12 +40,6 @@ pipeline {
     }
 
     stage("build docker image") {
-      when {
-        expression {
-          BRANCH_NAME == "main" //This variable is only available in multibranch pipeline.
-         }
-      }
-      
       steps {
         script {
           buildImage()
